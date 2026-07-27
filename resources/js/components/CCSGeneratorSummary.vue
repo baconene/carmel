@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { Download, Archive } from '@lucide/vue';
-import JSZip from 'jszip';
 import { Button } from '@/components/ui/button';
 import type { GeneratedFile } from '@/services/CCSXmlGenerator';
 
@@ -30,7 +29,7 @@ const modeLabels: Record<string, string> = {
   random: 'Completely Random',
 };
 
-async function downloadSingleFile(file: GeneratedFile) {
+function downloadSingleFile(file: GeneratedFile) {
   const blob = new Blob([file.content], { type: 'application/xml' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -41,19 +40,27 @@ async function downloadSingleFile(file: GeneratedFile) {
 }
 
 async function downloadAsZip(files: GeneratedFile[], prefix: string) {
-  const zip = new JSZip();
+  try {
+    // Dynamically import JSZip
+    const JSZip = (await import('jszip')).default;
+    const zip = new JSZip();
 
-  files.forEach((file) => {
-    zip.file(file.filename, file.content);
-  });
+    files.forEach((file) => {
+      zip.file(file.filename, file.content);
+    });
 
-  const blob = await zip.generateAsync({ type: 'blob' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `${prefix}_INTERVAL_FILES.zip`;
-  a.click();
-  URL.revokeObjectURL(url);
+    const blob = await zip.generateAsync({ type: 'blob' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${prefix}_INTERVAL_FILES.zip`;
+    a.click();
+    URL.revokeObjectURL(url);
+  } catch (error) {
+    console.error('Failed to create ZIP file:', error);
+    // Fallback: download files individually
+    alert('Unable to create ZIP file. Please download files individually.');
+  }
 }
 </script>
 
