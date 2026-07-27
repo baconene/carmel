@@ -14,7 +14,7 @@ interface Emits {
   (e: 'update:selectedIndex', value: number): void;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
 defineEmits<Emits>();
 
 const selectedFile = computed(() => {
@@ -44,8 +44,6 @@ function copyToClipboard() {
     navigator.clipboard.writeText(selectedFile.value.content);
   }
 }
-
-const props = defineProps<Props>();
 </script>
 
 <template>
