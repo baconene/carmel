@@ -4,6 +4,7 @@ import { ccsXmlGenerator } from '@/services/CCSXmlGenerator';
 
 export function useGeneratorState() {
   const filePrefix = ref<string>('');
+  const siteId = ref<string>('');
   const badgeNumber = ref<string>('');
   const meterNumber = ref<string>('');
   const startDate = ref<string>('');
@@ -51,6 +52,7 @@ export function useGeneratorState() {
     const errs: string[] = [];
 
     if (!filePrefix.value.trim()) errs.push('File Prefix is required');
+    if (!siteId.value.trim()) errs.push('Site ID is required');
     if (!badgeNumber.value.trim()) errs.push('Badge Number is required');
     if (!meterNumber.value.trim()) errs.push('Meter Number is required');
     if (!startDate.value) errs.push('Start Date is required');
@@ -93,6 +95,7 @@ export function useGeneratorState() {
   function getGenerationParams(): GenerationParams {
     return {
       filePrefix: filePrefix.value,
+      siteId: siteId.value,
       badgeNumber: badgeNumber.value,
       meterNumber: meterNumber.value,
       startDate: new Date(startDate.value),
@@ -132,6 +135,7 @@ export function useGeneratorState() {
 
   function reset(): void {
     filePrefix.value = '';
+    siteId.value = '';
     badgeNumber.value = '';
     meterNumber.value = '';
     startDate.value = '';
@@ -150,6 +154,7 @@ export function useGeneratorState() {
 
   return {
     filePrefix,
+    siteId,
     badgeNumber,
     meterNumber,
     startDate,

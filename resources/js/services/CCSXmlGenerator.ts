@@ -7,6 +7,7 @@ export interface ConsumptionConfig {
 
 export interface GenerationParams {
   filePrefix: string;
+  siteId: string;
   badgeNumber: string;
   meterNumber: string;
   startDate: Date;
@@ -122,7 +123,7 @@ export class CCSXmlGenerator {
 
     const beginDate = this.formatDate(dateRange.start).replace(/-/g, '-');
     const endDate = this.formatDate(dateRange.end).replace(/-/g, '-');
-    const formattedSiteId = params.badgeNumber.padStart(5, '0');
+    const formattedSiteId = params.siteId.padStart(5, '0');
 
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <responseDetails>

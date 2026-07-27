@@ -10,6 +10,7 @@ interface Props {
   intervalFrequency: string;
   consumptionMode: string;
   consumptionRange: string;
+  siteId: string;
   badgeNumber: string;
   meterNumber: string;
   filePrefix: string;
@@ -87,6 +88,10 @@ function downloadAllFiles(files: GeneratedFile[]) {
         <div class="flex justify-between">
           <span class="text-sm text-slate-600 dark:text-slate-400">Consumption Range</span>
           <span class="font-medium text-slate-900 dark:text-slate-100">{{ consumptionRange }}</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-sm text-slate-600 dark:text-slate-400">Site ID</span>
+          <span class="font-medium text-slate-900 dark:text-slate-100">{{ siteId }}</span>
         </div>
         <div class="flex justify-between">
           <span class="text-sm text-slate-600 dark:text-slate-400">Badge Number</span>

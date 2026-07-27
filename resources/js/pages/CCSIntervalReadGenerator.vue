@@ -80,6 +80,7 @@ const showPreview = computed(() => state.generatedFiles.value.length > 0);
                 :interval-frequency="state.intervalFrequency.value"
                 :consumption-mode="state.consumptionMode.value"
                 :consumption-range="state.consumptionRange.value"
+                :site-id="state.siteId.value"
                 :badge-number="state.badgeNumber.value"
                 :meter-number="state.meterNumber.value"
                 :file-prefix="state.filePrefix.value"

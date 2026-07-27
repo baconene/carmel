@@ -48,6 +48,22 @@ defineProps<{
       </p>
     </div>
 
+    <!-- Site ID -->
+    <div class="space-y-2">
+      <Label for="siteId" class="text-sm font-semibold">Site ID</Label>
+      <Input
+        id="siteId"
+        :model-value="state.siteId.value"
+        @update:model-value="state.siteId.value = $event"
+        type="text"
+        placeholder="05096"
+        class="text-base"
+      />
+      <p class="text-xs text-slate-500 dark:text-slate-400">
+        Site identifier for API endpoints
+      </p>
+    </div>
+
     <!-- Badge Number & Meter Number -->
     <div class="grid gap-4 md:grid-cols-2">
       <div class="space-y-2">
