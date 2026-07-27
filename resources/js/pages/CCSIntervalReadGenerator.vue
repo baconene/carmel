@@ -25,14 +25,16 @@ const showPreview = computed(() => state.generatedFiles.value.length > 0);
     <AppContent>
       <div class="space-y-6">
         <!-- Page Header -->
-        <div class="space-y-2">
-          <div class="flex items-center justify-between">
-            <div class="space-y-1">
-              <h1 class="flex items-center gap-2 text-3xl font-bold text-slate-900 dark:text-slate-100">
-                <Zap class="h-8 w-8 text-blue-600 dark:text-blue-400" />
+        <div class="space-y-3 border-b border-slate-200 pb-6 dark:border-slate-700">
+          <div class="flex items-start justify-between">
+            <div class="space-y-2">
+              <h1 class="flex items-center gap-3 text-4xl font-bold text-slate-900 dark:text-slate-100">
+                <div class="rounded-lg bg-blue-100 p-2 dark:bg-blue-900/30">
+                  <Zap class="h-8 w-8 text-blue-600 dark:text-blue-400" />
+                </div>
                 CCS Interval Read XML Generator
               </h1>
-              <p class="text-slate-600 dark:text-slate-400">
+              <p class="text-base text-slate-600 dark:text-slate-400">
                 Enterprise QA Tool for generating realistic meter payload testing
               </p>
             </div>
@@ -40,8 +42,10 @@ const showPreview = computed(() => state.generatedFiles.value.length > 0);
         </div>
 
         <!-- Main Content -->
-        <div v-if="!showPreview" class="rounded-lg border border-slate-200 bg-white p-6 dark:border-slate-700 dark:bg-slate-800">
-          <CCSGeneratorForm :state="state" />
+        <div v-if="!showPreview" class="rounded-xl border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-800">
+          <div class="p-8">
+            <CCSGeneratorForm :state="state" />
+          </div>
         </div>
 
         <!-- Preview & Summary Layout -->

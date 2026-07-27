@@ -34,7 +34,7 @@ defineProps<{
 
     <!-- File Prefix -->
     <div class="space-y-2">
-      <Label for="filePrefix">File Prefix</Label>
+      <Label for="filePrefix" class="text-sm font-semibold">File Prefix</Label>
       <Input
         id="filePrefix"
         v-model="state.filePrefix"
@@ -50,7 +50,7 @@ defineProps<{
     <!-- Badge Number & Meter Number -->
     <div class="grid gap-4 md:grid-cols-2">
       <div class="space-y-2">
-        <Label for="badgeNumber">Badge Number (MIU ID)</Label>
+        <Label for="badgeNumber" class="text-sm font-semibold">Badge Number (MIU ID)</Label>
         <Input
           id="badgeNumber"
           v-model="state.badgeNumber"
@@ -60,7 +60,7 @@ defineProps<{
         />
       </div>
       <div class="space-y-2">
-        <Label for="meterNumber">Meter Number</Label>
+        <Label for="meterNumber" class="text-sm font-semibold">Meter Number</Label>
         <Input
           id="meterNumber"
           v-model="state.meterNumber"
@@ -73,7 +73,7 @@ defineProps<{
 
     <!-- Date Range -->
     <div class="space-y-3">
-      <Label>Date Range</Label>
+      <Label class="text-sm font-semibold">Date Range</Label>
       <div class="grid gap-4 md:grid-cols-2">
         <div class="space-y-2">
           <Label for="startDate" class="text-xs font-normal text-slate-600 dark:text-slate-400"
@@ -84,6 +84,7 @@ defineProps<{
             v-model="state.startDate"
             type="date"
             class="text-base"
+            placeholder="2026-07-01"
           />
         </div>
         <div class="space-y-2">
@@ -95,6 +96,7 @@ defineProps<{
             v-model="state.endDate"
             type="date"
             class="text-base"
+            placeholder="2026-07-31"
           />
         </div>
       </div>
@@ -102,7 +104,7 @@ defineProps<{
 
     <!-- XML File Splitting -->
     <div class="space-y-3">
-      <Label for="splitMode">XML File Splitting</Label>
+      <Label for="splitMode" class="text-sm font-semibold">XML File Splitting</Label>
       <Select v-model="state.splitMode">
         <SelectTrigger id="splitMode">
           <SelectValue />
@@ -117,8 +119,8 @@ defineProps<{
     </div>
 
     <!-- Custom Days Per File -->
-    <div v-if="state.splitMode === 'custom'" class="space-y-2">
-      <Label for="customDaysPerFile">Days per File</Label>
+    <div v-if="state.splitMode === 'custom'" class="space-y-2 rounded-lg bg-blue-50 p-4 dark:bg-blue-900/20">
+      <Label for="customDaysPerFile" class="text-sm font-semibold">Days per File</Label>
       <Input
         id="customDaysPerFile"
         v-model.number="state.customDaysPerFile"
@@ -131,7 +133,7 @@ defineProps<{
 
     <!-- Interval Configuration -->
     <div class="space-y-3">
-      <Label for="intervalFrequency">Interval Frequency</Label>
+      <Label for="intervalFrequency" class="text-sm font-semibold">Interval Frequency</Label>
       <Select v-model="state.intervalFrequency">
         <SelectTrigger id="intervalFrequency">
           <SelectValue />
@@ -146,7 +148,7 @@ defineProps<{
 
     <!-- Consumption Generation Mode -->
     <div class="space-y-3">
-      <Label for="consumptionMode">Consumption Generation</Label>
+      <Label for="consumptionMode" class="text-sm font-semibold">Consumption Generation</Label>
       <Select v-model="state.consumptionMode">
         <SelectTrigger id="consumptionMode">
           <SelectValue />
@@ -160,28 +162,30 @@ defineProps<{
     </div>
 
     <!-- Consumption Parameters -->
-    <div v-if="state.consumptionMode === 'random-range'" class="grid gap-4 md:grid-cols-2 space-y-3 md:space-y-0">
-      <div class="space-y-2">
-        <Label for="minConsumption">Minimum Consumption</Label>
-        <Input
-          id="minConsumption"
-          v-model.number="state.minConsumption"
-          type="number"
-          min="0"
-          placeholder="0"
-          class="text-base"
-        />
-      </div>
-      <div class="space-y-2">
-        <Label for="maxConsumption">Maximum Consumption</Label>
-        <Input
-          id="maxConsumption"
-          v-model.number="state.maxConsumption"
-          type="number"
-          min="0"
-          placeholder="500"
-          class="text-base"
-        />
+    <div v-if="state.consumptionMode === 'random-range'" class="space-y-3">
+      <div class="grid gap-4 md:grid-cols-2">
+        <div class="space-y-2">
+          <Label for="minConsumption">Minimum Consumption</Label>
+          <Input
+            id="minConsumption"
+            v-model.number="state.minConsumption"
+            type="number"
+            min="0"
+            placeholder="0"
+            class="text-base"
+          />
+        </div>
+        <div class="space-y-2">
+          <Label for="maxConsumption">Maximum Consumption</Label>
+          <Input
+            id="maxConsumption"
+            v-model.number="state.maxConsumption"
+            type="number"
+            min="0"
+            placeholder="500"
+            class="text-base"
+          />
+        </div>
       </div>
     </div>
 
