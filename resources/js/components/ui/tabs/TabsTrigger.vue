@@ -9,10 +9,12 @@ const props = defineProps<Props>();
 
 const tabs = inject<any>('tabs');
 
-const isActive = computed(() => tabs?.value === props.value);
+const isActive = computed(() => tabs?.value?.value === props.value);
 
 const handleClick = () => {
-  tabs?.setValue(props.value);
+  if (tabs?.setValue) {
+    tabs.setValue(props.value);
+  }
 };
 </script>
 

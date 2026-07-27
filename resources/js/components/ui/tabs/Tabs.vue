@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, provide } from 'vue';
+import { ref, provide } from 'vue';
 
 interface Props {
   defaultValue?: string;
@@ -12,12 +12,14 @@ const props = withDefaults(defineProps<Props>(), {
 
 const modelValue = ref(props.value || props.defaultValue);
 
-const state = computed(() => ({
-  value: modelValue.value,
-  setValue: (val: string) => {
-    modelValue.value = val;
-  },
-}));
+const setValue = (val: string) => {
+  modelValue.value = val;
+};
+
+const state = {
+  value: modelValue,
+  setValue,
+};
 
 provide('tabs', state);
 </script>

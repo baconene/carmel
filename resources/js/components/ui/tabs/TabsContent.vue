@@ -9,7 +9,7 @@ const props = defineProps<Props>();
 
 const tabs = inject<any>('tabs');
 
-const isActive = computed(() => tabs?.value === props.value);
+const isActive = computed(() => tabs?.value?.value === props.value);
 </script>
 
 <template>

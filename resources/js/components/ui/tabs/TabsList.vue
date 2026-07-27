@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { inject, computed } from 'vue';
+import { inject } from 'vue';
 
 const tabs = inject<any>('tabs');
 </script>
@@ -7,7 +7,7 @@ const tabs = inject<any>('tabs');
 <template>
   <div
     role="tablist"
-    class="inline-flex h-10 items-center justify-center rounded-lg bg-slate-100 p-1 text-slate-500 dark:bg-slate-800 dark:text-slate-400"
+    class="inline-flex w-full h-10 items-center justify-center rounded-lg bg-slate-100 p-1 text-slate-500 dark:bg-slate-800 dark:text-slate-400"
   >
     <slot />
   </div>
