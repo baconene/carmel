@@ -108,6 +108,5 @@ const showPreview = computed(() => state.generatedFiles.value.length > 0);
           </div>
         </div>
       </div>
-    </div>
   </div>
 </template>
