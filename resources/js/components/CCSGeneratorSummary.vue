@@ -100,9 +100,9 @@ function downloadAllFiles(files: GeneratedFile[]) {
     </div>
 
     <!-- Download Buttons -->
-    <div v-if="files.length > 0" class="space-y-3">
+    <div v-if="(files && files.length > 0)" class="space-y-3">
       <h3 class="text-sm font-semibold text-slate-900 dark:text-slate-100">Download</h3>
-      <div v-if="files.length === 1" class="space-y-2">
+      <div v-if="(files && files.length === 1)" class="space-y-2">
         <Button
           @click="downloadSingleFile(files[0])"
           class="w-full gap-2 bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700"

@@ -15,10 +15,10 @@ export function useGeneratorState() {
   const minConsumption = ref<number>(0);
   const maxConsumption = ref<number>(500);
   const fixedValue = ref<number>(100);
-  const isGenerating = ref<boolean>(false);
+  const isGenerating = ref(false);
   const generatedFiles = ref<GeneratedFile[]>([]);
-  const selectedFileIndex = ref<number>(0);
-  const errorMessage = ref<string>('');
+  const selectedFileIndex = ref(0);
+  const errorMessage = ref('');
 
   const selectedFile = computed(() => {
     if (selectedFileIndex.value >= 0 && selectedFileIndex.value < generatedFiles.value.length) {

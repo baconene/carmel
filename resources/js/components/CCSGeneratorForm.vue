@@ -23,11 +23,11 @@ defineProps<{
 <template>
   <div class="space-y-6">
     <!-- Error Display -->
-    <div v-if="state.errorMessage" class="space-y-2">
+    <div v-if="state.errorMessage.value" class="space-y-2">
       <Alert class="border-red-200 bg-red-50 dark:border-red-900 dark:bg-red-900/20">
         <AlertCircle class="h-4 w-4 text-red-600 dark:text-red-400" />
         <AlertDescription class="text-red-800 dark:text-red-300">
-          {{ state.errorMessage }}
+          {{ state.errorMessage.value }}
         </AlertDescription>
       </Alert>
     </div>
@@ -212,12 +212,12 @@ defineProps<{
 
     <!-- Generate Button -->
     <Button
-      :disabled="!state.isValid || state.isGenerating"
+      :disabled="!state.isValid || state.isGenerating.value"
       @click="state.generateFiles()"
       class="w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700"
       size="lg"
     >
-      <template v-if="state.isGenerating">
+      <template v-if="state.isGenerating.value">
         <div class="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
         Generating...
       </template>
@@ -227,12 +227,12 @@ defineProps<{
     </Button>
 
     <!-- Validation Errors Display -->
-    <div v-if="state.errors.length > 0 && state.errorMessage === ''" class="space-y-2">
+    <div v-if="state.errors.value.length > 0 && state.errorMessage.value === ''" class="space-y-2">
       <Alert class="border-amber-200 bg-amber-50 dark:border-amber-900 dark:bg-amber-900/20">
         <AlertCircle class="h-4 w-4 text-amber-600 dark:text-amber-400" />
         <AlertDescription class="text-amber-800 dark:text-amber-300">
           <ul class="list-inside list-disc space-y-1">
-            <li v-for="error in state.errors" :key="error">{{ error }}</li>
+            <li v-for="error in state.errors.value" :key="error">{{ error }}</li>
           </ul>
         </AlertDescription>
       </Alert>
