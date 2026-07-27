@@ -1,0 +1,24 @@
+<script setup lang="ts">
+import { inject, computed } from 'vue';
+
+interface Props {
+  value: string;
+}
+
+const props = defineProps<Props>();
+
+const tabs = inject<any>('tabs');
+
+const isActive = computed(() => tabs?.value === props.value);
+</script>
+
+<template>
+  <div
+    v-if="isActive"
+    role="tabpanel"
+    :data-state="isActive ? 'active' : 'inactive'"
+    class="mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+  >
+    <slot />
+  </div>
+</template>
