@@ -87,7 +87,7 @@ export class CCSXmlGenerator {
     const readingsPerDay = this.getReadsPerDay(frequency);
     const readings: string[] = [];
 
-    for (let i = readingsPerDay - 1; i >= 0; i--) {
+    for (let i = 0; i < readingsPerDay; i++) {
       const readingDate = new Date(date);
       readingDate.setMinutes(readingDate.getMinutes() + i * intervalMinutes);
 
