@@ -89,17 +89,18 @@ export class CCSXmlGenerator {
 
     for (let i = readingsPerDay - 1; i >= 0; i--) {
       const readingDate = new Date(date);
+      readingDate.setHours(0, 0, 0, 0);
       readingDate.setMinutes(readingDate.getMinutes() + i * intervalMinutes);
 
       const consumption = this.generateConsumption(consumptionConfig);
       const consumptionWithMultiplier = (consumption / 10).toFixed(1);
       const dateTimeStr = this.formatDateTime(readingDate);
 
-      readings.push(`        <reading>
-          <reading_date>${dateTimeStr}</reading_date>
-          <consumption>${consumption}</consumption>
-          <consumption_with_multiplier>${consumptionWithMultiplier}</consumption_with_multiplier>
-        </reading>`);
+      readings.push(`        <consumption_history>
+            <reading_date>${dateTimeStr}</reading_date>
+            <consumption>${consumption}</consumption>
+            <consumption_with_multiplier>${consumptionWithMultiplier}</consumption_with_multiplier>
+        </consumption_history>`);
     }
 
     return readings.join('\n');
@@ -110,22 +111,35 @@ export class CCSXmlGenerator {
     params: GenerationParams,
   ): string {
     const readings: string[] = [];
-    const currentDate = new Date(dateRange.start);
+    const currentDate = new Date(dateRange.end);
 
-    while (currentDate <= dateRange.end) {
+    // Generate readings in reverse chronological order (end date to start date)
+    while (currentDate >= dateRange.start) {
       const dayReadings = this.generateReadingsForDay(currentDate, params.intervalFrequency, params.consumptionConfig);
       readings.push(dayReadings);
-      currentDate.setDate(currentDate.getDate() + 1);
+      currentDate.setDate(currentDate.getDate() - 1);
     }
 
+    const beginDate = this.formatDate(dateRange.start).replace(/-/g, '-');
+    const endDate = this.formatDate(dateRange.end).replace(/-/g, '-');
+    const formattedSiteId = params.badgeNumber.padStart(5, '0');
+
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<payload>
-  <miu_id>${params.badgeNumber}</miu_id>
-  <meter_number>${params.meterNumber}</meter_number>
-  <consumption_history>
+<responseDetails>
+    <site_id>${formattedSiteId}</site_id>
+    <endpoints>
+        <miu_id>${params.badgeNumber}</miu_id>
+        <meter_number>${params.meterNumber}</meter_number>
 ${readings.join('\n')}
-  </consumption_history>
-</payload>`;
+    </endpoints>
+    <paging>
+        <page>1</page>
+        <limit>100</limit>
+        <total>1</total>
+        <next>/api/v1/consumption?site_id=${formattedSiteId}&amp;begin_date=${beginDate}&amp;end_date=${endDate}&amp;actual_consumption=false&amp;page=2</next>
+        <self>/api/v1/consumption?site_id=${formattedSiteId}&amp;begin_date=${beginDate}&amp;end_date=${endDate}&amp;actual_consumption=false&amp;page=1</self>
+    </paging>
+</responseDetails>`;
 
     return xml;
   }
