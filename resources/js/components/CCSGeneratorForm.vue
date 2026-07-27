@@ -37,7 +37,8 @@ defineProps<{
       <Label for="filePrefix" class="text-sm font-semibold">File Prefix</Label>
       <Input
         id="filePrefix"
-        v-model="state.filePrefix"
+        :model-value="state.filePrefix.value"
+        @update:model-value="state.filePrefix.value = $event"
         type="text"
         placeholder="e.g., TEST, DEV, INTERVAL"
         class="text-base"
@@ -53,7 +54,8 @@ defineProps<{
         <Label for="badgeNumber" class="text-sm font-semibold">Badge Number (MIU ID)</Label>
         <Input
           id="badgeNumber"
-          v-model="state.badgeNumber"
+          :model-value="state.badgeNumber.value"
+          @update:model-value="state.badgeNumber.value = $event"
           type="text"
           placeholder="1563076506"
           class="text-base"
@@ -63,7 +65,8 @@ defineProps<{
         <Label for="meterNumber" class="text-sm font-semibold">Meter Number</Label>
         <Input
           id="meterNumber"
-          v-model="state.meterNumber"
+          :model-value="state.meterNumber.value"
+          @update:model-value="state.meterNumber.value = $event"
           type="text"
           placeholder="54573186"
           class="text-base"
@@ -81,7 +84,8 @@ defineProps<{
           >
           <Input
             id="startDate"
-            v-model="state.startDate"
+            :model-value="state.startDate.value"
+            @update:model-value="state.startDate.value = $event"
             type="date"
             class="text-base"
             placeholder="2026-07-01"
@@ -93,7 +97,8 @@ defineProps<{
           >
           <Input
             id="endDate"
-            v-model="state.endDate"
+            :model-value="state.endDate.value"
+            @update:model-value="state.endDate.value = $event"
             type="date"
             class="text-base"
             placeholder="2026-07-31"
@@ -105,7 +110,7 @@ defineProps<{
     <!-- XML File Splitting -->
     <div class="space-y-3">
       <Label for="splitMode" class="text-sm font-semibold">XML File Splitting</Label>
-      <Select v-model="state.splitMode">
+      <Select :model-value="state.splitMode.value" @update:model-value="state.splitMode.value = $event">
         <SelectTrigger id="splitMode">
           <SelectValue />
         </SelectTrigger>
@@ -119,11 +124,12 @@ defineProps<{
     </div>
 
     <!-- Custom Days Per File -->
-    <div v-if="state.splitMode === 'custom'" class="space-y-2 rounded-lg bg-blue-50 p-4 dark:bg-blue-900/20">
+    <div v-if="state.splitMode.value === 'custom'" class="space-y-2 rounded-lg bg-blue-50 p-4 dark:bg-blue-900/20">
       <Label for="customDaysPerFile" class="text-sm font-semibold">Days per File</Label>
       <Input
         id="customDaysPerFile"
-        v-model.number="state.customDaysPerFile"
+        :model-value="state.customDaysPerFile.value"
+        @update:model-value="state.customDaysPerFile.value = Number($event)"
         type="number"
         min="1"
         placeholder="2"
@@ -134,7 +140,7 @@ defineProps<{
     <!-- Interval Configuration -->
     <div class="space-y-3">
       <Label for="intervalFrequency" class="text-sm font-semibold">Interval Frequency</Label>
-      <Select v-model="state.intervalFrequency">
+      <Select :model-value="state.intervalFrequency.value" @update:model-value="state.intervalFrequency.value = $event">
         <SelectTrigger id="intervalFrequency">
           <SelectValue />
         </SelectTrigger>
@@ -149,7 +155,7 @@ defineProps<{
     <!-- Consumption Generation Mode -->
     <div class="space-y-3">
       <Label for="consumptionMode" class="text-sm font-semibold">Consumption Generation</Label>
-      <Select v-model="state.consumptionMode">
+      <Select :model-value="state.consumptionMode.value" @update:model-value="state.consumptionMode.value = $event">
         <SelectTrigger id="consumptionMode">
           <SelectValue />
         </SelectTrigger>
@@ -162,13 +168,14 @@ defineProps<{
     </div>
 
     <!-- Consumption Parameters -->
-    <div v-if="state.consumptionMode === 'random-range'" class="space-y-3">
+    <div v-if="state.consumptionMode.value === 'random-range'" class="space-y-3">
       <div class="grid gap-4 md:grid-cols-2">
         <div class="space-y-2">
           <Label for="minConsumption">Minimum Consumption</Label>
           <Input
             id="minConsumption"
-            v-model.number="state.minConsumption"
+            :model-value="state.minConsumption.value"
+            @update:model-value="state.minConsumption.value = Number($event)"
             type="number"
             min="0"
             placeholder="0"
@@ -179,7 +186,8 @@ defineProps<{
           <Label for="maxConsumption">Maximum Consumption</Label>
           <Input
             id="maxConsumption"
-            v-model.number="state.maxConsumption"
+            :model-value="state.maxConsumption.value"
+            @update:model-value="state.maxConsumption.value = Number($event)"
             type="number"
             min="0"
             placeholder="500"
@@ -189,11 +197,12 @@ defineProps<{
       </div>
     </div>
 
-    <div v-if="state.consumptionMode === 'fixed'" class="space-y-2">
+    <div v-if="state.consumptionMode.value === 'fixed'" class="space-y-2">
       <Label for="fixedValue">Fixed Consumption Value</Label>
       <Input
         id="fixedValue"
-        v-model.number="state.fixedValue"
+        :model-value="state.fixedValue.value"
+        @update:model-value="state.fixedValue.value = Number($event)"
         type="number"
         min="0"
         placeholder="100"

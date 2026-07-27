@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Download, Archive } from '@lucide/vue';
+import { Download } from '@lucide/vue';
 import { Button } from '@/components/ui/button';
 import type { GeneratedFile } from '@/services/CCSXmlGenerator';
 
@@ -39,28 +39,13 @@ function downloadSingleFile(file: GeneratedFile) {
   URL.revokeObjectURL(url);
 }
 
-async function downloadAsZip(files: GeneratedFile[], prefix: string) {
-  try {
-    // Dynamically import JSZip
-    const JSZip = (await import('jszip')).default;
-    const zip = new JSZip();
-
-    files.forEach((file) => {
-      zip.file(file.filename, file.content);
-    });
-
-    const blob = await zip.generateAsync({ type: 'blob' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${prefix}_INTERVAL_FILES.zip`;
-    a.click();
-    URL.revokeObjectURL(url);
-  } catch (error) {
-    console.error('Failed to create ZIP file:', error);
-    // Fallback: download files individually
-    alert('Unable to create ZIP file. Please download files individually.');
-  }
+function downloadAllFiles(files: GeneratedFile[]) {
+  // Download files individually with a small delay between each
+  files.forEach((file, index) => {
+    setTimeout(() => {
+      downloadSingleFile(file);
+    }, index * 200);
+  });
 }
 </script>
 
@@ -129,13 +114,16 @@ async function downloadAsZip(files: GeneratedFile[], prefix: string) {
       </div>
       <div v-else class="space-y-2">
         <Button
-          @click="downloadAsZip(files, filePrefix)"
+          @click="downloadAllFiles(files)"
           class="w-full gap-2 bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700"
           size="lg"
         >
-          <Archive class="h-4 w-4" />
-          Download as ZIP ({{ files.length }} files)
+          <Download class="h-4 w-4" />
+          Download All ({{ files.length }} files)
         </Button>
+        <p class="text-xs text-slate-500 dark:text-slate-400">
+          Files will download with a brief pause between each to ensure reliable delivery.
+        </p>
         <details class="group rounded-lg border border-slate-200 dark:border-slate-700">
           <summary class="cursor-pointer select-none px-4 py-3 text-sm font-medium text-slate-900 dark:text-slate-100">
             Or download individual files

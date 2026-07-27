@@ -20,10 +20,9 @@ const showPreview = computed(() => state.generatedFiles.value.length > 0);
 <template>
   <Head title="CCS Interval Read XML Generator" />
 
-  <AppShell>
+  <div class="space-y-6">
     <AppHeader />
-    <AppContent>
-      <div class="space-y-6">
+    <div class="mx-auto w-full max-w-7xl px-4">
         <!-- Page Header -->
         <div class="space-y-3 border-b border-slate-200 pb-6 dark:border-slate-700">
           <div class="flex items-start justify-between">
@@ -109,6 +108,6 @@ const showPreview = computed(() => state.generatedFiles.value.length > 0);
           </div>
         </div>
       </div>
-    </AppContent>
-  </AppShell>
+    </div>
+  </div>
 </template>
