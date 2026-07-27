@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { FileCode, Copy, Check } from '@lucide/vue';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import type { GeneratedFile } from '@/services/CCSXmlGenerator';
+import 'prismjs';
+import 'prismjs/themes/prism-tomorrow.min.css';
 
 interface Props {
   files: GeneratedFile[];
@@ -16,6 +18,7 @@ interface Emits {
 
 const props = defineProps<Props>();
 defineEmits<Emits>();
+const copied = ref(false);
 
 const selectedFile = computed(() => {
   if (props.selectedIndex >= 0 && props.selectedIndex < props.files.length) {
@@ -24,24 +27,27 @@ const selectedFile = computed(() => {
   return null;
 });
 
-const copied = computed(() => {
-  return false;
+const highlightedCode = computed(() => {
+  if (!selectedFile.value) return '';
+  const Prism = (window as any).Prism;
+  if (Prism && Prism.languages && Prism.languages.xml) {
+    return Prism.highlight(selectedFile.value.content, Prism.languages.xml, 'xml');
+  }
+  return selectedFile.value.content;
 });
 
-onMounted(() => {
-  try {
-    // Dynamically load Prism for syntax highlighting
-    if (typeof window !== 'undefined' && !!(window as any).Prism) {
-      (window as any).Prism.highlightAll();
-    }
-  } catch (e) {
-    // Prism not available, show plain text
-  }
+watch(() => props.selectedIndex, () => {
+  copied.value = false;
 });
 
 function copyToClipboard() {
   if (selectedFile.value) {
-    navigator.clipboard.writeText(selectedFile.value.content);
+    navigator.clipboard.writeText(selectedFile.value.content).then(() => {
+      copied.value = true;
+      setTimeout(() => {
+        copied.value = false;
+      }, 2000);
+    });
   }
 }
 </script>
@@ -91,8 +97,8 @@ function copyToClipboard() {
           <span class="text-xs">{{ copied ? 'Copied' : 'Copy' }}</span>
         </Button>
       </div>
-      <ScrollArea class="flex-1 rounded-lg border border-slate-200 bg-slate-50 dark:border-slate-700 dark:bg-slate-900">
-        <pre class="p-4 text-xs leading-relaxed text-slate-800 dark:text-slate-200"><code v-html="selectedFile.content" /></pre>
+      <ScrollArea class="flex-1 rounded-lg border border-slate-200 bg-slate-950 dark:border-slate-700">
+        <pre class="p-4 text-xs leading-relaxed"><code class="language-xml" v-html="highlightedCode" /></pre>
       </ScrollArea>
     </div>
 
