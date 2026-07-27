@@ -125,8 +125,7 @@ export class CCSXmlGenerator {
     const endDate = this.formatDate(dateRange.end).replace(/-/g, '-');
     const formattedSiteId = params.siteId.padStart(5, '0');
 
-    const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<responseDetails>
+    const xml = `<responseDetails>
     <site_id>${formattedSiteId}</site_id>
     <endpoints>
         <miu_id>${params.badgeNumber}</miu_id>
